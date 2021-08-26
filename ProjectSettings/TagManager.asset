@@ -47,6 +47,6 @@ TagManager:
   - name: Entity
     uniqueID: 3876169781
     locked: 0
-  - name: Foreground
+  - name: Floor
     uniqueID: 3738449525
     locked: 0
