@@ -46,11 +46,11 @@ TagManager:
   - name: Background
     uniqueID: 3222606249
     locked: 0
-  - name: Entity
-    uniqueID: 3876169781
-    locked: 0
   - name: Collectable
     uniqueID: 3274961535
+    locked: 0
+  - name: Entity
+    uniqueID: 3876169781
     locked: 0
   - name: Grass
     uniqueID: 3988303247
