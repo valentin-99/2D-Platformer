@@ -6,52 +6,59 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    private Collider2D coll;
+
     private enum State {idle, run, jump, fall_jump}
     private State state = State.idle;
-    private Collider2D coll;
+    
     [SerializeField] private LayerMask ground;
-
+    [SerializeField] private float speed;
+    [SerializeField] private float jump_force;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        speed = 7.5f;
+        jump_force = 15f;
     }
 
     private void Update()
     {
+        Move();
+        AnimationSwitch();
+        // Sets the animation state
+        anim.SetInteger("state", (int)state);
+    }
+
+    // Decide movement
+    private void Move()
+    {
         // Left
         if (Input.GetAxis("Horizontal") < 0)
         {
-            rb.velocity = new Vector2(-5, rb.velocity.y);
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1, 1);
         }
 
         // Right
         else if (Input.GetAxis("Horizontal") > 0)
         {
-            rb.velocity = new Vector2(5, rb.velocity.y);
+            rb.velocity = new Vector2(speed, rb.velocity.y);
             transform.localScale = new Vector2(1, 1);
-        }
-
-        else
-        {
         }
 
         // Jump
         if ((Input.GetAxis("Vertical") > 0) && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, 7.5f);
+            rb.velocity = new Vector2(rb.velocity.x, jump_force);
             state = State.jump;
         }
-
-        // Switch states
-        VelocityState();
-        anim.SetInteger("state", (int)state);
     }
 
-    private void VelocityState()
+    // Decide animation
+    private void AnimationSwitch()
     {
         // If player jumps he starts falling to the ground
         if (state == State.jump)
@@ -82,5 +89,4 @@ public class PlayerController : MonoBehaviour
             state = State.idle;
         }
     }
-
 }

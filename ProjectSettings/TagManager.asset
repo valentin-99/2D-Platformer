@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: Entity
     uniqueID: 3876169781
+    locked: 0
+  - name: Grass
+    uniqueID: 3988303247
     locked: 0
   - name: Floor
     uniqueID: 3738449525
