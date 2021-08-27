@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,14 +9,15 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
 
-    private enum State {idle, run, jump, fall_jump}
+    private enum State {idle, run, jump, fallJump, hurt}
     private State state = State.idle;
     
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed;
-    [SerializeField] private float jump_force;
-
-    public int cherries;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float hurtForce;
+    [SerializeField] private int cherries;
+    [SerializeField] private Text scoreCounter;
 
     private void Start()
     {
@@ -23,24 +25,59 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         speed = 6f;
-        jump_force = 14f;
+        jumpForce = 14f;
+        hurtForce = 6f;
         cherries = 0;
+        scoreCounter.text = "0";
     }
 
     private void Update()
     {
-        Move();
+        if (state != State.hurt)
+        {
+            Move();
+        }
         AnimationSwitch();
         // Sets the animation state
         anim.SetInteger("state", (int)state);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Collectable")
+    private void OnTriggerEnter2D(Collider2D collidedObject)
+    {   
+        // Collision between player and cherries
+        if (collidedObject.tag == "Collectable")
         {
-            Destroy(collision.gameObject);
+            Destroy(collidedObject.gameObject);
             cherries++;
+            scoreCounter.text = cherries.ToString();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collidedObject)
+    {
+        if (collidedObject.gameObject.tag == "Enemy")
+        {
+            if (state == State.fallJump)
+            {
+                Destroy(collidedObject.gameObject);
+                Jump();
+            }
+            else
+            {
+                state = State.hurt;
+                // Collided object is in front of the player
+                if (collidedObject.gameObject.transform.position.x > transform.position.x)
+                {
+                    // move player back
+                    rb.velocity = new Vector2(-hurtForce, rb.velocity.y);
+                }
+                // Collided object is behind the player
+                else
+                {
+                    // move player in front
+                    rb.velocity = new Vector2(hurtForce, rb.velocity.y);
+                }
+            }
         }
     }
 
@@ -64,9 +101,14 @@ public class PlayerController : MonoBehaviour
         // Jump
         if ((Input.GetAxis("Vertical") > 0) && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump_force);
-            state = State.jump;
+            Jump();
         }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        state = State.jump;
     }
 
     // Decide animation
@@ -77,14 +119,22 @@ public class PlayerController : MonoBehaviour
         {   
             if (rb.velocity.y < .1f)
             {
-                state = State.fall_jump;
+                state = State.fallJump;
             }   
         }
 
         // If player is falling to the ground and he's touching it then switch to idle
-        else if (state == State.fall_jump)
+        else if (state == State.fallJump)
         {
             if (coll.IsTouchingLayers(ground))
+            {
+                state = State.idle;
+            }
+        }
+
+        else if (state == State.hurt)
+        {
+            if (Mathf.Abs(rb.velocity.x) < .1f)
             {
                 state = State.idle;
             }
