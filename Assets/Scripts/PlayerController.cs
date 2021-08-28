@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         anim.SetInteger("state", (int)state);
     }
 
+    // Collision for collectable items
     private void OnTriggerEnter2D(Collider2D col)
     {
         // Collision between player and cherries
@@ -55,13 +56,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Collision for enemies
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Enemy")
         {
+            FrogController frog = col.gameObject.GetComponent<FrogController>();
             if (state == State.fallJump)
             {
-                Destroy(col.gameObject);
+                frog.UnableFrogCollider();
+                frog.FrogDeath();
                 Jump();
             }
             else
@@ -107,6 +111,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Jump util function
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
