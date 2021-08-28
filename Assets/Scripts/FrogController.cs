@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrogController : MonoBehaviour
+public class FrogController : Enemy
 {
-    private Collider2D coll;
-    private Rigidbody2D rb;
-    private Animator anim;
-    private BoxCollider2D boxCol;
-
     [SerializeField] private LayerMask ground;
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
@@ -17,12 +12,9 @@ public class FrogController : MonoBehaviour
 
     private bool moveLeft;
 
-    private void Start()
+    protected override void Start()
     {
-        coll = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        boxCol = GetComponent<BoxCollider2D>();
+        base.Start();
 
         leftLimit = transform.position.x - 3f;
         rightLimit = transform.position.x + 3f;
@@ -93,20 +85,5 @@ public class FrogController : MonoBehaviour
                 moveLeft = true;
             }
         }
-    }
-
-    public void FrogDeath()
-    {
-        anim.SetTrigger("death");
-    }
-
-    public void UnableFrogCollider()
-    {
-        boxCol.enabled = false;
-    }
-
-    private void ForgDestroy()
-    {
-        Destroy(this.gameObject);
     }
 }

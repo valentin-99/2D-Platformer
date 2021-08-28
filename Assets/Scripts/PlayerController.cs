@@ -61,11 +61,11 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            FrogController frog = col.gameObject.GetComponent<FrogController>();
+            Enemy enemy = col.gameObject.GetComponent<Enemy>();
             if (state == State.fallJump)
             {
-                frog.UnableFrogCollider();
-                frog.FrogDeath();
+                enemy.UnableEnemyCollider();
+                enemy.EnemyDeath();
                 Jump();
             }
             else
