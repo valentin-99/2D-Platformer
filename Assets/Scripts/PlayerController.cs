@@ -9,15 +9,16 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private Collider2D coll;
 
-    private enum State {idle, run, jump, fallJump, hurt}
+    private enum State { idle, run, jump, fallJump, hurt }
     private State state = State.idle;
-    
+
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float hurtForce;
-    [SerializeField] private int cherries;
     [SerializeField] private Text scoreCounter;
+    
+    private int cherries;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collidedObject)
-    {   
+    {
         // Collision between player and cherries
         if (collidedObject.tag == "Collectable")
         {
@@ -116,11 +117,11 @@ public class PlayerController : MonoBehaviour
     {
         // If player jumps he starts falling to the ground
         if (state == State.jump)
-        {   
+        {
             if (rb.velocity.y < .1f)
             {
                 state = State.fallJump;
-            }   
+            }
         }
 
         // If player is falling to the ground and he's touching it then switch to idle
