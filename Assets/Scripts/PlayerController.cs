@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private State state = State.idle;
 
     [SerializeField] private LayerMask ground;
+    [SerializeField] private LayerMask groundMargins;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float hurtForce;
@@ -43,31 +44,31 @@ public class PlayerController : MonoBehaviour
         anim.SetInteger("state", (int)state);
     }
 
-    private void OnTriggerEnter2D(Collider2D collidedObject)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         // Collision between player and cherries
-        if (collidedObject.tag == "Collectable")
+        if (col.tag == "Collectable")
         {
-            Destroy(collidedObject.gameObject);
+            Destroy(col.gameObject);
             cherries++;
             scoreCounter.text = cherries.ToString();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collidedObject)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (collidedObject.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy")
         {
             if (state == State.fallJump)
             {
-                Destroy(collidedObject.gameObject);
+                Destroy(col.gameObject);
                 Jump();
             }
             else
             {
                 state = State.hurt;
                 // Collided object is in front of the player
-                if (collidedObject.gameObject.transform.position.x > transform.position.x)
+                if (col.gameObject.transform.position.x > transform.position.x)
                 {
                     // move player back
                     rb.velocity = new Vector2(-hurtForce, rb.velocity.y);
@@ -116,7 +117,7 @@ public class PlayerController : MonoBehaviour
     private void AnimationSwitch()
     {
         // If player jumps he starts falling to the ground
-        if (state == State.jump)
+        if ((state == State.jump) || (coll.IsTouchingLayers(groundMargins)))
         {
             if (rb.velocity.y < .1f)
             {

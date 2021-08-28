@@ -31,12 +31,14 @@ public class FrogController : MonoBehaviour
 
     private void Update()
     {
+        // If the frog is in jumping state and it starts reaching max height then it will start falling
         if (anim.GetBool("isJumping") && (rb.velocity.y < .1f))
         {
             anim.SetBool("isFalling", true);
             anim.SetBool("isJumping", false);
         }
 
+        // If the frog is in the falling state it will stop when it lands the ground
         else if (anim.GetBool("isFalling") && (coll.IsTouchingLayers(ground)))
         {
             anim.SetBool("isFalling", false);

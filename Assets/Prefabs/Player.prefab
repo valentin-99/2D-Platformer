@@ -145,12 +145,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81445fd444f29d142a576e602cac7028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  jumpForce: 0
-  hurtForce: 0
   ground:
     serializedVersion: 2
     m_Bits: 64
+  groundMargins:
+    serializedVersion: 2
+    m_Bits: 128
+  speed: 0
+  jumpForce: 0
+  hurtForce: 0
   scoreCounter: {fileID: 0}
 --- !u!95 &8968715832102991092
 Animator:
