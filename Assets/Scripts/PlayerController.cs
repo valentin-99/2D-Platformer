@@ -62,12 +62,16 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Enemy")
         {
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
+            enemy.ChangeEnemyBodyStatic();
+
             if (state == State.fallJump)
             {
+                //enemy.ChangeEnemyBodyStatic();
                 enemy.UnableEnemyCollider();
                 enemy.EnemyDeath();
                 Jump();
             }
+
             else
             {
                 state = State.hurt;
@@ -76,12 +80,14 @@ public class PlayerController : MonoBehaviour
                 {
                     // move player back
                     rb.velocity = new Vector2(-hurtForce, rb.velocity.y);
+                    enemy.ChangeEnemyBodyDynamic();
                 }
                 // Collided object is behind the player
                 else
                 {
                     // move player in front
                     rb.velocity = new Vector2(hurtForce, rb.velocity.y);
+                    enemy.ChangeEnemyBodyDynamic();
                 }
             }
         }

@@ -27,6 +27,16 @@ public class Enemy : MonoBehaviour
         boxCol.enabled = false;
     }
 
+    public void ChangeEnemyBodyStatic()
+    {
+        rb.bodyType = RigidbodyType2D.Static;
+    }
+
+    public void ChangeEnemyBodyDynamic()
+    {
+        rb.bodyType = RigidbodyType2D.Dynamic;
+    }
+
     private void EnemyDestroy()
     {
         Destroy(this.gameObject);
