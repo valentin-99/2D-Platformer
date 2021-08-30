@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         // Collision between player and cherries
-        if (col.tag == "Collectable")
+        if (col.CompareTag("Collectable"))
         {
             Destroy(col.gameObject);
             cherries++;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     // Collision for enemies
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = col.gameObject.GetComponent<Enemy>();
             enemy.ChangeEnemyBodyStatic();
