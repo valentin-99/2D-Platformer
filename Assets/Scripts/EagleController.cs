@@ -7,6 +7,8 @@ public class EagleController : Enemy
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
     [SerializeField] private float speedHorizontal;
+    [SerializeField] private AudioSource screech;
+    [SerializeField] private AudioSource explosion;
 
     private bool moveLeft;
 
@@ -43,7 +45,9 @@ public class EagleController : Enemy
             }
             else
             {
+                // change direction
                 moveLeft = false;
+                Screech();
             }
         }
 
@@ -61,8 +65,21 @@ public class EagleController : Enemy
             }
             else
             {
+                // change direction
                 moveLeft = true;
+                Screech();
             }
         }
+    }
+
+    // Sound effects utils
+    private void Screech()
+    {
+        screech.Play();
+    }
+
+    private void Explode()
+    {
+        explosion.Play();
     }
 }

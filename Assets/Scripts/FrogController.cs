@@ -9,6 +9,8 @@ public class FrogController : Enemy
     [SerializeField] private float rightLimit;
     [SerializeField] private float jumpLength;
     [SerializeField] private float jumpHeight;
+    [SerializeField] private AudioSource croak;
+    [SerializeField] private AudioSource explosion;
 
     private bool moveLeft;
 
@@ -60,6 +62,7 @@ public class FrogController : Enemy
             }
             else
             {
+                // change direction
                 moveLeft = false;
             }
         }
@@ -82,8 +85,20 @@ public class FrogController : Enemy
             }
             else
             {
+                // change direction
                 moveLeft = true;
             }
         }
+    }
+
+    // Sound effects utils
+    private void Croak()
+    {
+        croak.Play();
+    }
+
+    private void Explode()
+    {
+        explosion.Play();
     }
 }

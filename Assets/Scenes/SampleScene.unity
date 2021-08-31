@@ -1337,7 +1337,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1261500802}
   - component: {fileID: 1261500801}
-  - component: {fileID: 1261500800}
   - component: {fileID: 1261500804}
   m_Layer: 0
   m_Name: Main Camera
@@ -1346,14 +1345,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1261500800
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261500799}
-  m_Enabled: 1
 --- !u!20 &1261500801
 Camera:
   m_ObjectHideFlags: 0
@@ -3119,14 +3110,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1399730633, guid: a0b7e882fb25a694b9ba9282365ba9b1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1399730633, guid: a0b7e882fb25a694b9ba9282365ba9b1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9184654908350126513, guid: a0b7e882fb25a694b9ba9282365ba9b1, type: 3}
       propertyPath: m_RootOrder
       value: 1

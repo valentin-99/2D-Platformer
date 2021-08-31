@@ -18,7 +18,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float hurtForce;
     [SerializeField] private Text scoreCounter;
-    
+    [SerializeField] private AudioSource footstep;
+    [SerializeField] private AudioSource bounce;
+    [SerializeField] private AudioSource collect;
+    [SerializeField] private AudioSource boink;
+
     private int cherries;
 
     private void Start()
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
+
         AnimationSwitch();
         // Sets the animation state
         anim.SetInteger("state", (int)state);
@@ -53,6 +58,7 @@ public class PlayerController : MonoBehaviour
             Destroy(col.gameObject);
             cherries++;
             scoreCounter.text = cherries.ToString();
+            Collect();
         }
     }
 
@@ -74,7 +80,9 @@ public class PlayerController : MonoBehaviour
 
             else
             {
+                HurtBoink();
                 state = State.hurt;
+
                 // Collided object is in front of the player
                 if (col.gameObject.transform.position.x > transform.position.x)
                 {
@@ -120,6 +128,7 @@ public class PlayerController : MonoBehaviour
     // Jump util function
     private void Jump()
     {
+        Bounce();
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         state = State.jump;
     }
@@ -162,6 +171,33 @@ public class PlayerController : MonoBehaviour
         else
         {
             state = State.idle;
+        }
+    }
+
+    // Sound effects utils
+    private void Footstep()
+    {
+        footstep.Play();
+    }
+
+    private void Bounce()
+    {
+        if (!bounce.isPlaying)
+        {
+            bounce.Play();
+        }
+    }
+
+    private void Collect()
+    {
+        collect.Play();
+    }
+
+    private void HurtBoink()
+    {
+        if (!boink.isPlaying)
+        {
+            boink.Play();
         }
     }
 }
