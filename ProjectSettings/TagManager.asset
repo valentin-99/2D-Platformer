@@ -14,8 +14,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - GroundMargins
-  - 
+  - GroundMarginsDown
+  - GroundMarginsSides
   - 
   - 
   - 
@@ -45,6 +45,12 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 3222606249
+    locked: 0
+  - name: Vegetation
+    uniqueID: 3129772517
+    locked: 0
+  - name: Finish
+    uniqueID: 2095507841
     locked: 0
   - name: Collectable
     uniqueID: 3274961535

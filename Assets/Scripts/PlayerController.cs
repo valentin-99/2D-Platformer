@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private State state = State.idle;
 
     [SerializeField] private LayerMask ground;
-    [SerializeField] private LayerMask groundMargins;
+    [SerializeField] private LayerMask groundMarginsDown;
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float hurtForce;
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
     private void AnimationSwitch()
     {
         // If player jumps he starts falling to the ground
-        if ((state == State.jump) || (coll.IsTouchingLayers(groundMargins)))
+        if ((state == State.jump) || (coll.IsTouchingLayers(groundMarginsDown)))
         {
             if (rb.velocity.y < .1f)
             {
